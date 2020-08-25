@@ -22,23 +22,20 @@ jobs:
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
     - name: Restore packages
-      run: nuget restore ${{ env.SOLUTION }}
+      run: |
+           nuget restore ${{ env.SOLUTION }}
+           nuget restore ${{ env.INSTALLER_FOLDER }}\Installer.sln
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
     - name: Build with MSBuild
       run: msbuild ${{ env.SOLUTION }} -p:Configuration=Release
     - name: Build WIX
       run: msbuild ${{ env.INSTALLER_FOLDER }}\Installer.sln -p:Configuration=Release
-    - name: Building wix's obj
-      run:  ${{ env.INSTALLER_FOLDER }}\packages\WiX.3.11.1\tools\candle.exe -dSolutionDir=${{ env.INSTALLER_FOLDER }} -dSolutionExt=.sln -dSolutionFileName=Installer.sln -dSolutionName=Installer -dSolutionPath=${{ env.INSTALLER_FOLDER }}\Installer.sln -dConfiguration=Release -dOutDir=${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\obj\x64\Release\ -dPlatform=x64 -dProjectDir=${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\ -dProjectExt=.wixproj -dProjectFileName=Pilot-RvtShareListener_x64.wixproj -dProjectName=Pilot-RvtShareListener_x64 -dProjectPath=${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\Pilot-RvtShareListener_x64.wixproj -dTargetDir=${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\bin\x64\Release\ -dTargetExt=.msi -dTargetFileName=Pilot_RvtShareListener_x64.msi -dTargetName=Pilot_RvtShareListener_x64 -dTargetPath=${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\bin\x64\Release\Pilot_RvtShareListener_x64.msi -out ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\obj\x64\Release\ -arch x64 -ext ..\packages\WiX.3.11.1\tools\WixUtilExtension.dll -ext ..\packages\WiX.3.11.1\tools\WixUIExtension.dll "${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\Components.wxs" "${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\Product.wxs"
-      shell: cmd
-    - name: echo
-      if: ${{ always() }}
-      run: cat ${{ github.workspace }}\output.txt
     - uses: actions/upload-artifact@v2
       with:
        name: my-artifact
        path: |
-        ${{ env.INSTALLER_FOLDER }}\obj\x64\Release\
+        ${{ env.INSTALLER_FOLDER }}\bin\x64\Release\
+        ${{ env.INSTALLER_FOLDER }}\bin\x64\Debug\
     
 
