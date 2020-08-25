@@ -35,10 +35,10 @@ jobs:
       run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
     - name: Prepare files to release\
       run: |
+       mkdir ${{ env.RELESE_FOLDER }}
        move ${{ github.workspace }}\${{ env.REVIT_ADDIN }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_ADDIN }}
        move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER }} 
        move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}
-      shell: cmd 
     - uses: actions/upload-artifact@v2
       with:
        name: my-artifact
