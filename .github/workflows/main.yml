@@ -9,8 +9,8 @@ env:
  SOLUTION: "Ascon.Pilot.SDK.RevitSample.sln"
  INSTALLER_FOLDER:  ${{ github.workspace }}\RSLInstaller
  INSTALLER_SOLUTION:  ${{ github.workspace }}\RSLInstaller\Installer.sln
- INSTALLERX64: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x64\bin\x64\Debug\Pilot_RvtShareListener_x64.msi
- INSTALLERX86: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x86\bin\Debug\Pilot_RvtShareListener_x86.msi
+ INSTALLERX64: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x64\bin\x64\Release\Pilot_RvtShareListener_x64.msi
+ INSTALLERX86: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x86\bin\Release\Pilot_RvtShareListener_x86.msi
  RELEASE_FOLDER: ${{ github.workspace }}\upload
  
 
