@@ -7,7 +7,7 @@ env:
  REVIT_SHARE_AGREGATOR: "Ascon.Pilot.SDK.RevitShareAgregator"
  SOLUTION: "Ascon.Pilot.SDK.RevitSample.sln"
  INSTALLER_FOLDER:  ${{ github.workspace }}\RSLInstaller
- INSTALLER_SOLUTION:  ${{ env.INSTALLER_FOLDER }}\Installer.sln
+ INSTALLER_SOLUTION:  ${{ github.workspace }}\RSLInstaller\Installer.sln
  RELESE_FOLDER: ${{ github.workspace }}\upload
 
 on:
