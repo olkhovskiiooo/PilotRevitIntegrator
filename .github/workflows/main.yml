@@ -6,7 +6,7 @@ env:
  REVIT_SHARE_LISTENER_CONSOLE:  "PilotRevitShareListener.Console"
  REVIT_SHARE_AGREGATOR: "Ascon.Pilot.SDK.RevitShareAgregator"
  SOLUTION: "Ascon.Pilot.SDK.RevitSample.sln"
- INSTALLER_FOLDER:  ${{ github.workspace }}\"RSLInstaller"
+ INSTALLER_FOLDER:  ${{ github.workspace }}\RSLInstaller
 
 on:
   push:
