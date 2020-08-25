@@ -44,3 +44,5 @@ jobs:
        name: my-artifact
        path: |
         ${{ env.RELESE_FOLDER }}
+        ${{ env.RELEASE_FOLDER }}\${{ env.ADMINISTATOR_RELEASE }}
+        ${{ env.RELEASE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
