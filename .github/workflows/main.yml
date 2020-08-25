@@ -43,7 +43,5 @@ jobs:
       with:
        name: my-artifact
        path: |
-        ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\bin\x64
-        ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\bin\x64
-    
+        ${{ env.RELESE_FOLDER }}
 
