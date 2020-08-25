@@ -7,6 +7,8 @@ env:
  REVIT_SHARE_AGREGATOR: "Ascon.Pilot.SDK.RevitShareAgregator"
  SOLUTION: "Ascon.Pilot.SDK.RevitSample.sln"
  INSTALLER_FOLDER:  ${{ github.workspace }}\RSLInstaller
+ INSTALLER_SOLUTION:  ${{ github.INSTALLER_FOLDER }}\RSLInstaller
+ RELESE_FOLDER: ${{ github.workspace }}\upload
 
 on:
   push:
@@ -24,13 +26,18 @@ jobs:
     - name: Restore packages
       run: |
            nuget restore ${{ env.SOLUTION }}
-           nuget restore ${{ env.INSTALLER_FOLDER }}\Installer.sln
+           nuget restore ${{ env.INSTALLER_SOLUTION }}
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
-    - name: Build with MSBuild
+    - name: Build with MSBuild 
       run: msbuild ${{ env.SOLUTION }} -p:Configuration=Release
     - name: Build WIX
-      run: msbuild ${{ env.INSTALLER_FOLDER }}\Installer.sln -p:Configuration=Release
+      run: msbuild ${{ env.INSTALLER_SOLUTION }}-p:Configuration=Release
+    - name: Prepare files to release\
+      run: |
+       move ${{ github.workspace }}\${{ env.REVIT_ADDIN }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_ADDIN }}
+       move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER }} 
+        move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}
     - uses: actions/upload-artifact@v2
       with:
        name: my-artifact
