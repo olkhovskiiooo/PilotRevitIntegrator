@@ -32,7 +32,7 @@ jobs:
     - name: Build with MSBuild 
       run: msbuild ${{ env.SOLUTION }} -p:Configuration=Release
     - name: Build WIX
-      run: msbuild ${{ env.INSTALLER_SOLUTION }}-p:Configuration=Release
+      run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
     - name: Prepare files to release\
       run: |
        move ${{ github.workspace }}\${{ env.REVIT_ADDIN }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_ADDIN }}
