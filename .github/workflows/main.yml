@@ -1,6 +1,7 @@
 name: PilotRevitIntegrator
 env:
  ADMINISTATOR: "Ascon.Pilot.RevitShareListener.Administrator"
+ ADMINISTATOR_RELEASE: "RevitShareListener.Administrator"
  REVIT_ADDIN: "PilotRevitAddin"
  REVIT_SHARE_LISTENER: "PilotRevitShareListener"
  REVIT_SHARE_LISTENER_CONSOLE:  "PilotRevitShareListener.Console"
