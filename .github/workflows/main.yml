@@ -35,7 +35,7 @@ jobs:
       with:
        name: my-artifact
        path: |
-        ${{ env.INSTALLER_FOLDER }}\bin\x64\Release\
-        ${{ env.INSTALLER_FOLDER }}\bin\x64\Debug\
+        ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\bin\x64
+        ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\bin\x64
     
 
