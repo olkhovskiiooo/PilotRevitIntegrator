@@ -1,11 +1,38 @@
-on: [push]
- 
+name: PilotRevitIntegrator
+env:
+ ADMINISTATOR: "Ascon.Pilot.RevitShareListener.Administrator"
+ ADMINISTATOR_RELEASE: "RevitShareListener.Administrator"
+ REVIT_ADDIN: "PilotRevitAddin"
+ REVIT_SHARE_LISTENER: "PilotRevitShareListener"
+ REVIT_SHARE_LISTENER_CONSOLE:  "PilotRevitShareListener.Console"
+ REVIT_SHARE_AGREGATOR: "Ascon.Pilot.SDK.RevitShareAgregator"
+ SOLUTION: "Ascon.Pilot.SDK.RevitSample.sln"
+ INSTALLER_FOLDER:  ${{ github.workspace }}\RSLInstaller
+ INSTALLER_SOLUTION:  ${{ github.workspace }}\RSLInstaller\Installer.sln
+ INSTALLERX64: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x64\bin\x64\Release\Pilot_RvtShareListener_x64.msi
+ INSTALLERX86: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x86\bin\Release\Pilot_RvtShareListener_x86.msi
+ RELESE_FOLDER: ${{ github.workspace }}\upload
+  
+
+on:
+  push:
+    branches: [ TestCi ]
+
 jobs:
   build:
+
     runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v1
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+    - name: Restore packages
+      run: |
+           nuget restore ${{ env.SOLUTION }}
+           nuget restore ${{ env.INSTALLER_SOLUTION }}
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
     - name: tar
       run: |
           cd ${{ github.workspace }}
