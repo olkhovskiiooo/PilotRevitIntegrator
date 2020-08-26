@@ -42,4 +42,4 @@ jobs:
       with:
        name: my-artifact
        path: |
-        ${{ env.RELESE_FOLDER }}\Release
+        ${{ github.workspace }}\Release
