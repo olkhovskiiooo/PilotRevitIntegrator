@@ -37,11 +37,6 @@ jobs:
       run: msbuild ${{ env.SOLUTION }} -p:Configuration=Release
     - name: Build WIX
       run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
-    - name: tar
-      run: |
-          cd ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x86\bin\Release
-          tar -a -c -f qwerty.zip *
-      shell: cmd
     - name: Prepare files to release
       run: |
        mkdir ${{ env.RELESE_FOLDER }}
@@ -53,11 +48,11 @@ jobs:
        mkdir ${{ env.RELESE_FOLDER }}\Installer
        move ${{ env.INSTALLERX64 }} ${{ env.RELESE_FOLDER }}\Installer
        move ${{ env.INSTALLERX86 }} ${{ env.RELESE_FOLDER }}\Installer
-    - name: Zip binaries
-      uses: papeloto/action-zip@v1
-      with:
-        files: upload/
-        dest: result.zip
+    - name: tar
+      run: |
+          cd ${{ github.workspace }}\upload
+          tar -a -c -f release.zip *
+      shell: cmd
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
