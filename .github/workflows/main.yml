@@ -42,6 +42,7 @@ jobs:
       run: |
           cd ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release
           tar -a -c -f ${{ env.REVIT_SHARE_AGREGATOR }}.zip *
+      shell: cmd
     - name: Prepare files to release
       run: |
        mkdir ${{ env.RELESE_FOLDER }}
