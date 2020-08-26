@@ -38,14 +38,19 @@ jobs:
       run: msbuild ${{ env.SOLUTION }} -p:Configuration=Release
     - name: Build WIX
       run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
+    - name: Zip plugin
+      run: |
+          cd ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release
+          tar -a -c -f ${{ env.REVIT_SHARE_AGREGATOR }}.zip *
     - name: Prepare files to release
       run: |
        mkdir ${{ env.RELESE_FOLDER }}
        move ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.ADMINISTATOR_RELEASE }}
-       move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
        move ${{ github.workspace }}\${{ env.REVIT_ADDIN }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_ADDIN }}
        move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER }} 
        move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}
+       mkdir ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
+       move move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release\${{ env.REVIT_SHARE_AGREGATOR }}.zip ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
        mkdir ${{ env.RELESE_FOLDER }}\Installer
        move ${{ env.INSTALLERX64 }} ${{ env.RELESE_FOLDER }}\Installer
        move ${{ env.INSTALLERX86 }} ${{ env.RELESE_FOLDER }}\Installer
