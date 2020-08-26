@@ -41,7 +41,7 @@ jobs:
       uses: papeloto/action-zip@v1
       with:
         files: ${{ env.REVIT_SHARE_AGREGATOR }}/bin/Release/
-        dest: ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release\${{ env.REVIT_SHARE_AGREGATOR }}.zip
+        dest: ${{ env.REVIT_SHARE_AGREGATOR }}/bin/Release/${{ env.REVIT_SHARE_AGREGATOR }}.zip
     - name: Prepare files to release
       run: |
        mkdir ${{ env.RELESE_FOLDER }}
