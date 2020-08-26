@@ -42,12 +42,12 @@ jobs:
           mkdir ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\zip
           move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\zip
           cd ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\zip
-          tar -a -c -f compressed.zip *
+          tar -a -c -f ${{ env.REVIT_SHARE_AGREGATOR }}.zip *
     - name: Prepare files to release
       run: |
        mkdir ${{ env.RELESE_FOLDER }}
        move ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.ADMINISTATOR_RELEASE }}
-       move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
+       move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\zip\${{ env.REVIT_SHARE_AGREGATOR }}.zip ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
        move ${{ github.workspace }}\${{ env.REVIT_ADDIN }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_ADDIN }}
        move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER }} 
        move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}
