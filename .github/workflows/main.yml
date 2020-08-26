@@ -39,7 +39,7 @@ jobs:
       run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
     - name: tar
       run: |
-          cd ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin
+          cd ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release
           tar -a -c -f compressed.zip *
     - name: Prepare files to release
       run: |
