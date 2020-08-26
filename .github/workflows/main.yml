@@ -50,7 +50,7 @@ jobs:
        move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER }} 
        move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}
        mkdir ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
-       move move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release\${{ env.REVIT_SHARE_AGREGATOR }}.zip ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
+       move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release\${{ env.REVIT_SHARE_AGREGATOR }}.zip ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
        mkdir ${{ env.RELESE_FOLDER }}\Installer
        move ${{ env.INSTALLERX64 }} ${{ env.RELESE_FOLDER }}\Installer
        move ${{ env.INSTALLERX86 }} ${{ env.RELESE_FOLDER }}\Installer
