@@ -37,6 +37,10 @@ jobs:
       run: msbuild ${{ env.SOLUTION }} -p:Configuration=Release
     - name: Build WIX
       run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
+    - name: tar
+      run: |
+          cd ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}
+          tar -a -c -f compressed.zip *
     - name: Prepare files to release
       run: |
        mkdir ${{ env.RELESE_FOLDER }}
@@ -48,13 +52,9 @@ jobs:
        mkdir ${{ env.RELESE_FOLDER }}\Installer
        move ${{ env.INSTALLERX64 }} ${{ env.RELESE_FOLDER }}\Installer
        move ${{ env.INSTALLERX86 }} ${{ env.RELESE_FOLDER }}\Installer
-    - name: tar
-      run: |
-          cd ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}
-          tar -a -c -f compressed.zip *
       shell: cmd
     - uses: actions/upload-artifact@v2
       with:
        name: my-artifact
        path: |
-        ${{ github.workspace }}\\${{ env.REVIT_SHARE_AGREGATOR }}\compressed.zip
+        ${{ github.workspace }}\\${{ env.RELESE_FOLDER }}
