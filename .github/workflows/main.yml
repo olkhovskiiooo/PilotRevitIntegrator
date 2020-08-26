@@ -35,10 +35,6 @@ jobs:
       run: msbuild ${{ env.SOLUTION }} -p:Configuration=Release
     - name: Build WIX
       run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
-    - name: Prepare files to release
-      run: |
-       mkdir ${{ env.RELESE_FOLDER }}
-       move ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release ${{ env.RELEASE_FOLDER }}
     - uses: actions/upload-artifact@v2
       with:
        name: my-artifact
