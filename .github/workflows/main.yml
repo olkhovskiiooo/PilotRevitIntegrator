@@ -38,7 +38,7 @@ jobs:
     - name: Prepare files to release
       run: |
        mkdir ${{ env.RELESE_FOLDER }}
-       move ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release ${{ github.workspace }}\upload
+       move ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release ${{ env.RELESE_FOLDER }}
     - uses: actions/upload-artifact@v2
       with:
        name: my-artifact
