@@ -35,11 +35,29 @@ jobs:
       uses: warrenbuckley/Setup-MSBuild@v1
     - name: Build with MSBuild 
       run: msbuild ${{ env.SOLUTION }} -p:Configuration=Release
-    - name: tar
+    - name: Build WIX
+      run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
+    - name: Prepare files to release
       run: |
-          cd ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release
-          tar -a -c -f release.zip *
-      shell: cmd
+       mkdir ${{ env.RELESE_FOLDER }}
+       move ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.ADMINISTATOR_RELEASE }}
+       move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
+       move ${{ github.workspace }}\${{ env.REVIT_ADDIN }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_ADDIN }}
+       move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER }} 
+       move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}
+       mkdir ${{ env.RELESE_FOLDER }}\Installer
+       move ${{ env.INSTALLERX64 }} ${{ env.RELESE_FOLDER }}\Installer
+       move ${{ env.INSTALLERX86 }} ${{ env.RELESE_FOLDER }}\Installer
+    - name: Zip binaries 1
+      uses: papeloto/action-zip@v1
+      with:
+        files: upload/Ascon.Pilot.RevitShareListener.Administrator/
+        dest: upload/Ascon.Pilot.RevitShareListener.Administrator/result.zip
+    - name: Zip binaries
+      uses: papeloto/action-zip@v1
+      with:
+        files: upload/
+        dest: result.zip
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
