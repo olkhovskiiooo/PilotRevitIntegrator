@@ -40,6 +40,9 @@ jobs:
        mkdir ${{ env.RELESE_FOLDER }}
        move ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.ADMINISTATOR_RELEASE }}
        move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
+       move ${{ github.workspace }}\${{ env.REVIT_ADDIN }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_ADDIN }}
+       move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER }} 
+       move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}
     - uses: actions/upload-artifact@v2
       with:
        name: my-artifact
