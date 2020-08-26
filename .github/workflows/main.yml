@@ -48,11 +48,15 @@ jobs:
        mkdir ${{ env.RELESE_FOLDER }}\Installer
        move ${{ env.INSTALLERX64 }} ${{ env.RELESE_FOLDER }}\Installer
        move ${{ env.INSTALLERX86 }} ${{ env.RELESE_FOLDER }}\Installer
+    - uses: papeloto/action-zip@v1
+      with:
+       files: ${{ env.RELESE_FOLDER }}/*
+       dest: result.zip
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ env.RELESE_FOLDER }}*
+        file: ${{ github.workspace }}\result.zip
         tag: ${{ github.ref }}
         overwrite: true
         body: "This is my release text"
