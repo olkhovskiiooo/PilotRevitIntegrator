@@ -64,7 +64,7 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${{ env.RELESE_FOLDER }}\bins.zip
-        tag: "0.0.0.1"
+        tag: $GITHUB_RUN_ID
         overwrite: true
         body: "some text"
         file_glob: true
