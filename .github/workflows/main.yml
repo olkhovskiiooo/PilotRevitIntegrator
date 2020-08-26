@@ -33,6 +33,10 @@ jobs:
            nuget restore ${{ env.INSTALLER_SOLUTION }}
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
+    - name: Build with MSBuild 
+      run: msbuild ${{ env.SOLUTION }} -p:Configuration=Release
+    - name: Build WIX
+      run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
     - name: tar
       run: |
           cd ${{ github.workspace }}
