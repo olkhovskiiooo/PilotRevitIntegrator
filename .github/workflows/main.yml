@@ -12,7 +12,7 @@ env:
  INSTALLERX64: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x64\bin\x64\Release\Pilot_RvtShareListener_x64.msi
  INSTALLERX86: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x86\bin\Release\Pilot_RvtShareListener_x86.msi
  RELESE_FOLDER: ${{ github.workspace }}\upload
-  
+ DATE: "`r format(Sys.time(), '%d %B, %Y')`"
 
 on:
   push:
@@ -25,6 +25,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: ex
+      run: echo ${{ env.DATE }}
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
     - name: Restore packages
@@ -67,4 +69,4 @@ jobs:
       with:
        name: my-artifact
        path: |
-        ${{ github.workspace }}\zip
+        ${{ github.workspace }}\zip\
