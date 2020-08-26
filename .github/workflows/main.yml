@@ -55,8 +55,12 @@ jobs:
        move ${{ env.INSTALLERX64 }} ${{ env.RELESE_FOLDER }}\Installer
        move ${{ env.INSTALLERX86 }} ${{ env.RELESE_FOLDER }}\Installer
       shell: cmd
-    - uses: actions/upload-artifact@v2
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
       with:
-       name: my-artifact
-       path: |
-             ${{ env.RELESE_FOLDER }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ env.RELESE_FOLDER }}
+        tag: ${{ github.ref }}
+        overwrite: true
+        body: "This is my release text"
+        file_glob: true
