@@ -39,9 +39,9 @@ jobs:
       run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
     - name: tar
       run: |
-          mkdir ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\zip\
-          move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\zip
-          cd ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\zip\Release
+          mkdir ${{ github.workspace }}\zip
+          move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release\* ${{ github.workspace }}\zip
+          cd ${{ github.workspace }}\zip
           tar -a -c -f ${{ env.REVIT_SHARE_AGREGATOR }}.zip *
     - name: Prepare files to release
       run: |
@@ -60,12 +60,8 @@ jobs:
       run: |
           cd ${{ env.RELESE_FOLDER }}
           tar -a -c -f bins.zip *
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v2
+    - uses: actions/upload-artifact@v2
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ env.RELESE_FOLDER }}\bins.zip
-        tag: $GITHUB_RUN_ID
-        overwrite: true
-        body: "some text"
-        file_glob: true
+       name: my-artifact
+       path: |
+        ${{ github.workspace }}\zip
