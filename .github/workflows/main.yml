@@ -41,9 +41,11 @@ jobs:
       run: |
           mkdir ${{ github.workspace }}\zip
           move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release\* ${{ github.workspace }}\zip
-          cd ${{ github.workspace }}\zip
-          tar -a -c -f ${{ env.REVIT_SHARE_AGREGATOR }}.zip *
       shell: cmd
+    - uses: papeloto/action-zip@v1
+      with:
+        files: zip/
+        dest: result.zip
     - name: Prepare files to release
       run: |
        mkdir ${{ env.RELESE_FOLDER }}
@@ -52,7 +54,7 @@ jobs:
        move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER }} 
        move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}
        mkdir ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
-       move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\zip\Release\${{ env.REVIT_SHARE_AGREGATOR }}.zip ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
+       move result.zip ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
        mkdir ${{ env.RELESE_FOLDER }}\Installer
        move ${{ env.INSTALLERX64 }} ${{ env.RELESE_FOLDER }}\Installer
        move ${{ env.INSTALLERX86 }} ${{ env.RELESE_FOLDER }}\Installer
