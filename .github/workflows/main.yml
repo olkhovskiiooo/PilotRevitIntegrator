@@ -50,7 +50,7 @@ jobs:
        move ${{ env.INSTALLERX86 }} ${{ env.RELESE_FOLDER }}\Installer
     - name: tar
       run: |
-          cd ${{ github.workspace }}\RSLInstaller
+          cd ${{ github.workspace }}\RSLInstaller\
           tar -a -c -f compressed.zip *
       shell: cmd
     - uses: actions/upload-artifact@v2
