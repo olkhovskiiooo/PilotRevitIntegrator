@@ -12,7 +12,7 @@ env:
  INSTALLERX64: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x64\bin\x64\Release\Pilot_RvtShareListener_x64.msi
  INSTALLERX86: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x86\bin\Release\Pilot_RvtShareListener_x86.msi
  RELESE_FOLDER: ${{ github.workspace }}\upload
- DATE: "`r format(Sys.time(), '%d %B, %Y')`"
+ CURRENT_DATE: "`r Sys.time()`"
 
 on:
   push:
@@ -68,7 +68,7 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${{ env.RELESE_FOLDER }}\bins.zip
-        tag: $GITHUB_RUN_ID
+        tag: ${{ env.CURRENT_DATE }}.$GITHUB_RUN_ID
         overwrite: true
         body: "some text"
         file_glob: true
