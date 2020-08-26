@@ -39,7 +39,7 @@ jobs:
       run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
     - name: tar
       run: |
-          cd ${{ github.workspace }}\${{ env.REVIT_ADDIN }}\bin\Release
+          cd ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x86\bin\Release
           tar -a -c -f qwerty.zip *
       shell: cmd
     - name: Prepare files to release
