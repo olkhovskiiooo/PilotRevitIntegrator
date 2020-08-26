@@ -37,11 +37,11 @@ jobs:
       run: msbuild ${{ env.SOLUTION }} -p:Configuration=Release
     - name: Build WIX
       run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
-    - name: Zip plugin
-      uses: papeloto/action-zip@v1
-      with:
-        files: ${{ env.REVIT_SHARE_AGREGATOR }}/bin/Release/
-        dest: ${{ env.REVIT_SHARE_AGREGATOR }}/bin/Release/${{ env.REVIT_SHARE_AGREGATOR }}.zip
+    - name: tar
+      run: |
+          cd ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release
+          tar -a -c -f ${{ env.REVIT_SHARE_AGREGATOR }}.zip *
+      shell: cmd
     - name: Prepare files to release
       run: |
        mkdir ${{ env.RELESE_FOLDER }}
