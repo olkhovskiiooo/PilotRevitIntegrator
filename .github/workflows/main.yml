@@ -25,7 +25,7 @@ jobs:
 
     steps:
     - name: cpme
-      run: echo `r Sys.time()`
+      run: echo ${{ GITHUB_RUN_ID }}
     - uses: actions/checkout@v1
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
