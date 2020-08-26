@@ -40,7 +40,7 @@ jobs:
     - name: Zip plugin
       uses: papeloto/action-zip@v1
       with:
-        files: ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release\
+        files: ${{ env.REVIT_SHARE_AGREGATOR }}/bin/Release/
         dest: ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release\${{ env.REVIT_SHARE_AGREGATOR }}.zip
     - name: Prepare files to release
       run: |
@@ -56,7 +56,7 @@ jobs:
     - name: Zip binaries
       uses: papeloto/action-zip@v1
       with:
-        files: ${{ env.RELESE_FOLDER }}/
+        files: upload/
         dest: result.zip
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
