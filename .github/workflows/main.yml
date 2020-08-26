@@ -25,8 +25,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: ex
-      run: echo ${{ env.DATE }}
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
     - name: Restore packages
@@ -65,8 +63,12 @@ jobs:
       run: |
           cd ${{ env.RELESE_FOLDER }}
           tar -a -c -f bins.zip *
-    - uses: actions/upload-artifact@v2
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
       with:
-       name: my-artifact
-       path: |
-        ${{ github.workspace }}\zip\
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ env.RELESE_FOLDER }}\bins.zip
+        tag: $GITHUB_RUN_ID
+        overwrite: true
+        body: "some text"
+        file_glob: true
