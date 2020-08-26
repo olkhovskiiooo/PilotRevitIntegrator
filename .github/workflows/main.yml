@@ -40,7 +40,7 @@ jobs:
     - name: tar
       run: |
           cd ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release
-          tar -a -c -f ${{ env.REVIT_SHARE_AGREGATOR }}.zip *
+          tar -a -c -f qwerty.zip *
       shell: cmd
     - name: Prepare files to release
       run: |
