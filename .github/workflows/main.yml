@@ -1,69 +1,18 @@
-name: PilotRevitIntegrator
-env:
- ADMINISTATOR: "Ascon.Pilot.RevitShareListener.Administrator"
- ADMINISTATOR_RELEASE: "RevitShareListener.Administrator"
- REVIT_ADDIN: "PilotRevitAddin"
- REVIT_SHARE_LISTENER: "PilotRevitShareListener"
- REVIT_SHARE_LISTENER_CONSOLE:  "PilotRevitShareListener.Console"
- REVIT_SHARE_AGREGATOR: "Ascon.Pilot.SDK.RevitShareAgregator"
- SOLUTION: "Ascon.Pilot.SDK.RevitSample.sln"
- INSTALLER_FOLDER:  ${{ github.workspace }}\RSLInstaller
- INSTALLER_SOLUTION:  ${{ github.workspace }}\RSLInstaller\Installer.sln
- INSTALLERX64: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x64\bin\x64\Release\Pilot_RvtShareListener_x64.msi
- INSTALLERX86: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x86\bin\Release\Pilot_RvtShareListener_x86.msi
- RELESE_FOLDER: ${{ github.workspace }}\upload
-  
-
-on:
-  push:
-    branches: [ TestCi ]
-
+on: [push]
+ 
 jobs:
   build:
-
     runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v1
-    - name: Setup Nuget.exe
-      uses: warrenbuckley/Setup-Nuget@v1
-    - name: Restore packages
+    - name: tar
       run: |
-           nuget restore ${{ env.SOLUTION }}
-           nuget restore ${{ env.INSTALLER_SOLUTION }}
-    - name: Setup MSBuild.exe
-      uses: warrenbuckley/Setup-MSBuild@v1
-    - name: Build with MSBuild 
-      run: msbuild ${{ env.SOLUTION }} -p:Configuration=Release
-    - name: Build WIX
-      run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
-    - name: Prepare files to release
-      run: |
-       mkdir ${{ env.RELESE_FOLDER }}
-       move ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.ADMINISTATOR_RELEASE }}
-       move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
-       move ${{ github.workspace }}\${{ env.REVIT_ADDIN }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_ADDIN }}
-       move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER }} 
-       move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}
-       mkdir ${{ env.RELESE_FOLDER }}\Installer
-       move ${{ env.INSTALLERX64 }} ${{ env.RELESE_FOLDER }}\Installer
-       move ${{ env.INSTALLERX86 }} ${{ env.RELESE_FOLDER }}\Installer
-    - name: Zip binaries 1
-      uses: papeloto/action-zip@v1
+          cd ${{ github.workspace }}
+          tar -a -c -f compressed.zip *
+      shell: cmd
+    - uses: actions/upload-artifact@v2
       with:
-        files: upload/Ascon.Pilot.RevitShareListener.Administrator/
-        dest: upload/Ascon.Pilot.RevitShareListener.Administrator/result.zip
-    - name: Zip binaries
-      uses: papeloto/action-zip@v1
-      with:
-        files: upload/
-        dest: result.zip
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ github.workspace }}\result.zip
-        tag: ${{ github.ref }}
-        overwrite: true
-        body: "This is my release text"
-        file_glob: true
+       name: my-artifact
+       path: |
+        ${{ github.workspace }}\compressed.zip
