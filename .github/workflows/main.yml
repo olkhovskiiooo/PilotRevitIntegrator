@@ -63,5 +63,5 @@ jobs:
         file: ${{ env.RELESE_FOLDER }}
         tag: ${{ github.ref }}
         overwrite: true
-        body: "This is my release text"
+        body: "new tag"
         file_glob: true
