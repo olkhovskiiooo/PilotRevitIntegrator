@@ -39,9 +39,9 @@ jobs:
       run: |
        mkdir ${{ env.RELESE_FOLDER }}
        move ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release ${{ env.RELEASE_FOLDER }}
-       shell: cmd
     - uses: actions/upload-artifact@v2
       with:
        name: my-artifact
        path: |
         ${{ env.RELESE_FOLDER }}
+        ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release
