@@ -39,7 +39,9 @@ jobs:
       run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
     - name: tar
       run: |
-          cd ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release
+          mkdir ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\zip
+          move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\zip
+          cd ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\zip
           tar -a -c -f compressed.zip *
     - name: Prepare files to release
       run: |
@@ -57,4 +59,4 @@ jobs:
       with:
        name: my-artifact
        path: |
-        ${{ github.workspace }}\\${{ env.RELESE_FOLDER }}
+             ${{ env.RELESE_FOLDER }}
