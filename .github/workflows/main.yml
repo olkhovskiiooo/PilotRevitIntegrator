@@ -70,14 +70,12 @@ jobs:
       env:
           TAG_NAME: ${{ steps.date.outputs.date }}.${{ github.run_id }}
     - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v2
+      uses: ncipollo/release-action@v1
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ env.RELESE_FOLDER }}\binaries${{ env.TAG_NAME }}.zip
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: ${{ env.RELESE_FOLDER }}\binaries${{ env.TAG_NAME }}.zip
         tag: ${{ env.TAG_NAME }}
-        release_name: "some name"
-        overwrite: true
-        file_glob: true
+        name: ${{ env.RELEASE_NAME }}
       env:
           TAG_NAME: ${{ steps.date.outputs.date }}.${{ github.run_id }}
           RELEASE_NAME: ${{ steps.date.outputs.date }}
