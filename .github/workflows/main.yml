@@ -12,7 +12,7 @@ env:
  INSTALLERX64: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x64\bin\x64\Release\Pilot_RvtShareListener_x64.msi
  INSTALLERX86: ${{ github.workspace }}\RSLInstaller\Pilot-RvtShareListener_x86\bin\Release\Pilot_RvtShareListener_x86.msi
  RELESE_FOLDER: ${{ github.workspace }}\upload
- CURRENT_DATE: "`r Sys.time()`"
+ 
 
 on:
   push:
@@ -25,7 +25,10 @@ jobs:
 
     steps:
     - name: cpme
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      id: date
+      run: echo "%DATE%"
+    - name: check
+      run: echo ${{steps.date.output}
     - uses: actions/checkout@v1
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
