@@ -27,8 +27,6 @@ jobs:
     - name: cpme
       id: date
       run: echo "%DATE%"
-    - name: check
-      run: echo ${{steps.date.output}
     - uses: actions/checkout@v1
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
