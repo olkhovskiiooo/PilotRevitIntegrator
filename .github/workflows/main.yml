@@ -74,9 +74,10 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${{ env.RELESE_FOLDER }}\binaries${{ env.TAG_NAME }}.zip
+        release_name: ${{ env.RELEASE_NAME }}
         tag: ${{ env.TAG_NAME }}
         overwrite: true
-        body: "new release"
         file_glob: true
       env:
           TAG_NAME: ${{ steps.date.outputs.date }}.${{ github.run_id }}
+          RELEASE_NAME: ${{ steps.date.outputs.date }}
