@@ -45,7 +45,7 @@ jobs:
           mkdir ${{ github.workspace }}\zip
           move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release\* ${{ github.workspace }}\zip
       shell: cmd
-    - name: Zip plugin
+    - name: Zip ${{ env.REVIT_SHARE_AGREGATOR }}
       uses: papeloto/action-zip@v1
       with:
         files: zip/
