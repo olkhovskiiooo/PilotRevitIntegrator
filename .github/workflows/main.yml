@@ -71,9 +71,10 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${{ env.RELESE_FOLDER }}\bins.zip
-        tag: ${{ env.TAG_NAME }}.${{ github.run_id }}
+        asset_name: binaries${{ env.TAG_NAME }}
+        tag: ${{ env.TAG_NAME }}
         overwrite: true
         body: "some text"
         file_glob: true
       env:
-          TAG_NAME: ${{ steps.date.outputs.date }}
+          TAG_NAME: ${{ steps.date.outputs.date }}.${{ github.run_id }}
