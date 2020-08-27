@@ -74,8 +74,8 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${{ env.RELESE_FOLDER }}\binaries${{ env.TAG_NAME }}.zip
-        release_name: some name
         tag: ${{ env.TAG_NAME }}
+        release_name: "some name"
         overwrite: true
         file_glob: true
       env:
