@@ -35,17 +35,17 @@ jobs:
       uses: warrenbuckley/Setup-MSBuild@v1
     - name: Build with MSBuild 
       run: msbuild ${{ env.SOLUTION }} -p:Configuration=Release
-    - name: Build WIX
+    - name: Build Installer
       run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
     - name: Get current date
       id: date
       run: echo "::set-output name=date::$(date +'%y.%m.%d')" 
-    - name: tar
+    - name: Move plugin
       run: |
           mkdir ${{ github.workspace }}\zip
           move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release\* ${{ github.workspace }}\zip
       shell: cmd
-    - name: Zip ${{ env.REVIT_SHARE_AGREGATOR }}
+    - name: Zip plugin
       uses: papeloto/action-zip@v1
       with:
         files: zip/
