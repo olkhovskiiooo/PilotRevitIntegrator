@@ -29,8 +29,12 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
        dotnet-version: 3.1.301 
+    - name: Nuget restor
+      run: |
+           nuget restore ${{ env.SOLUTION }}
+           nuget restore ${{ env.INSTALLER_SOLUTION }}
     - name: Build
-      run: dotnet nuget restore dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore
 
 
     - name: Build Installer
