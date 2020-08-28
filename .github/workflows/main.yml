@@ -25,16 +25,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Setup Nuget.exe
-      uses: warrenbuckley/Setup-Nuget@v1
-    - name: Restore packages
-      run: |
-           nuget restore ${{ env.SOLUTION }}
-           nuget restore ${{ env.INSTALLER_SOLUTION }}
-    - name: Setup MSBuild.exe
-      uses: warrenbuckley/Setup-MSBuild@v1
-    - name: Build with MSBuild 
-      run: msbuild ${{ env.SOLUTION }} -p:Configuration=Release
+    - name: nugfet
+      run: dotnet nuget restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+
+
     - name: Build Installer
       run: msbuild ${{ env.INSTALLER_SOLUTION }} -p:Configuration=Release
     - name: Get current date
