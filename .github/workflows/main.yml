@@ -47,29 +47,6 @@ jobs:
           mkdir ${{ github.workspace }}\zip
           move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release\* ${{ github.workspace }}\zip
       shell: cmd
-    - name: Zip plugin
-      uses: papeloto/action-zip@v1
-      with:
-        files: zip/
-        dest: ${{ env.REVIT_SHARE_AGREGATOR }}.zip
-    - name: Prepare files to release
-      run: |
-       mkdir ${{ env.RELESE_FOLDER }}
-       move ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.ADMINISTATOR_RELEASE }}
-       move ${{ github.workspace }}\${{ env.REVIT_ADDIN }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_ADDIN }}
-       move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER }} 
-       move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}
-       mkdir ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
-       move ${{ env.REVIT_SHARE_AGREGATOR }}.zip ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
-       mkdir ${{ env.RELESE_FOLDER }}\Installer
-       move ${{ env.INSTALLERX64 }} ${{ env.RELESE_FOLDER }}\Installer
-       move ${{ env.INSTALLERX86 }} ${{ env.RELESE_FOLDER }}\Installer
-    - name: Zip binaries
-      run: |
-          cd ${{ env.RELESE_FOLDER }}
-          tar -a -c -f binaries${{ env.TAG_NAME }}.zip *
-      env:
-          TAG_NAME: ${{ steps.date.outputs.date }}.${{ github.run_id }}
     - name: Upload binaries to release
       uses: ncipollo/release-action@v1
       with:
