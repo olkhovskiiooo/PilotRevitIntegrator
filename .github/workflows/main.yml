@@ -74,7 +74,7 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: ${{ env.RELESE_FOLDER }}\binaries${{ env.TAG_NAME }}.zip
+        artifacts: ${{ env.INSTALLER_FOLDER }}
         tag: ${{ env.TAG_NAME }}
         name: ${{ env.RELEASE_NAME }}
         body: " "
