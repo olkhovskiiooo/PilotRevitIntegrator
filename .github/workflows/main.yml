@@ -16,7 +16,7 @@ env:
 
 on:
   push:
-    branches: [ CI ]
+    branches: [ TestCi ]
 
 jobs:
   build:
