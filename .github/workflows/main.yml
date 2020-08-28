@@ -37,6 +37,7 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Build Installer
       run: |
+           copy ${{ env.INSTALLER_FOLDER }}\packages\WiX.3.11.1\tools\WixTasks.dll ${{ env.INSTALLER_FOLDER }}\packages\WiX.3.11.1\build\tools\WixTasks.dll 
            cd ${{ env.INSTALLER_FOLDER }}
            dotnet build --configuration Release --no-restore
     - name: Get current date
