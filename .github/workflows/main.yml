@@ -36,7 +36,9 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Build Installer
-      run: dotnet build ${{ env.INSTALLER_SOLUTION } --configuration Release --no-restore
+      run: |
+           cd ${{ env.INSTALLER_FOLDER }}
+           dotnet build --configuration Release --no-restore
     - name: Get current date
       id: date
       run: echo "::set-output name=date::$(date +'%y.%m.%d')" 
