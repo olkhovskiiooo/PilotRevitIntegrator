@@ -4,7 +4,7 @@
 
   <?include "Variables.wxi" ?>
   <Fragment>
-    <DirectoryRef Id ="APPLICATIONFOLDER" FileSource = "..\..\Ascon.Pilot.RevitShareListener.Administrator\bin\Release\">
+    <DirectoryRef Id ="APPLICATIONFOLDER" FileSource = "D:\a\PilotRevitIntegrator\PilotRevitIntegrator\Ascon.Pilot.RevitShareListener.Administrator\bin\Release\">
       <Component Id="Pilot_RvtShareListenerService.Administrator" Win64="$(var.Win64)" Guid="5125FFC6-5C91-4663-804D-DBE6AE380537">
       <File Id="Pilot_RvtShareListenerService.Administrator.exe" Name ="RSLAdmin.exe" />
       <File Id="Pilot_RvtShareListenerService.Administrator.exe.config" Name="RSLAdmin.exe.config" />
@@ -12,7 +12,7 @@
       </Component>
     </DirectoryRef>
 
-    <DirectoryRef Id="APPLICATIONFOLDER" FileSource = "..\..\PilotRevitShareListener\bin\Release\">
+    <DirectoryRef Id="APPLICATIONFOLDER" FileSource = "D:\a\PilotRevitIntegrator\PilotRevitIntegrator\PilotRevitShareListener\bin\Release\">
       <Component Id="NetStandardComponents" Win64="$(var.Win64)" Guid="88B46DF4-81AD-42FF-97E6-8B6ECB579E65">
         <File Id = "Microsoft.AspNetCore.Cryptography.Internal.dll" Name = "Microsoft.AspNetCore.Cryptography.Internal.dll" />
         <File Id = "Microsoft.AspNetCore.DataProtection.Abstractions.dll" Name = "Microsoft.AspNetCore.DataProtection.Abstractions.dll" />
@@ -142,7 +142,7 @@
       </Component>
     </DirectoryRef>
 
-    <DirectoryRef Id="APPLICATIONFOLDER" FileSource = "..\..\PilotRevitShareListener\bin\Release\">
+    <DirectoryRef Id="APPLICATIONFOLDER" FileSource = "D:\a\PilotRevitIntegrator\PilotRevitIntegrator\PilotRevitShareListener\bin\Release\">
       <Component Id="Pilot_RvtShareListenerService" Win64="$(var.Win64)" Guid="471AEEC5-70B4-4056-B7EB-8743FD195C08">
         <File Id="PilotRvtShareListener" Name ="Pilot-RvtShareListenerService.exe" />
         <File Id="Newtonsoft.Json.dll" Name ="Newtonsoft.Json.dll" />
