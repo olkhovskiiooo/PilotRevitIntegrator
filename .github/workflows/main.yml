@@ -16,7 +16,7 @@ env:
 
 on:
   push:
-    branches: [ TestCi ]
+    branches: [ CI ]
 
 jobs:
   build:
@@ -25,11 +25,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-       dotnet-version: 3.1.301 
-    - name: Nuget restor
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+    - name: Restore packages
       run: |
            nuget restore ${{ env.SOLUTION }}
            nuget restore ${{ env.INSTALLER_SOLUTION }}
@@ -41,3 +39,45 @@ jobs:
     - name: Building wix's bin
       run:  ${{ env.INSTALLER_FOLDER }}\packages\WiX.3.11.1\tools\light.exe -out ${{ env.INSTALLER_FOLDER }}\RSLInstaller\Pilot-RvtShareListener_x64\bin\x64\Release\Pilot_RvtShareListener_x64.msi -pdbout ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\bin\x64\Release\Pilot_RvtShareListener_x64.wixpdb -cultures:null -ext ${{ env.INSTALLER_FOLDER }}\packages\WiX.3.11.1\tools\WixUtilExtension.dll -ext ${{ env.INSTALLER_FOLDER }}\packages\WiX.3.11.1\tools\WixUIExtension.dll -contentsfile ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\obj\x64\Release\Pilot-RvtShareListener_x64.wixproj.BindContentsFileListnull.txt -outputsfile ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\obj\x64\Release\Pilot-RvtShareListener_x64.wixproj.BindOutputsFileListnull.txt -builtoutputsfile ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\obj\x64\Release\Pilot-RvtShareListener_x64.wixproj.BindBuiltOutputsFileListnull.txt -wixprojectfile ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\Pilot-RvtShareListener_x64.wixproj ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\obj\x64\Release\Components.wixobj ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\obj\x64\Release\Product.wixobj
       shell: cmd
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%y.%m.%d')" 
+    - name: Move plugin
+      run: |
+          mkdir ${{ github.workspace }}\zip
+          move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release\* ${{ github.workspace }}\zip
+      shell: cmd
+    - name: Zip plugin
+      uses: papeloto/action-zip@v1
+      with:
+        files: zip/
+        dest: ${{ env.REVIT_SHARE_AGREGATOR }}.zip
+    - name: Prepare files to release
+      run: |
+       mkdir ${{ env.RELESE_FOLDER }}
+       move ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.ADMINISTATOR_RELEASE }}
+       move ${{ github.workspace }}\${{ env.REVIT_ADDIN }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_ADDIN }}
+       move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER }} 
+       move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}
+       mkdir ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
+       move ${{ env.REVIT_SHARE_AGREGATOR }}.zip ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
+       mkdir ${{ env.RELESE_FOLDER }}\Installer
+       move ${{ env.INSTALLERX64 }} ${{ env.RELESE_FOLDER }}\Installer
+       move ${{ env.INSTALLERX86 }} ${{ env.RELESE_FOLDER }}\Installer
+    - name: Zip binaries
+      run: |
+          cd ${{ env.RELESE_FOLDER }}
+          tar -a -c -f binaries${{ env.TAG_NAME }}.zip *
+      env:
+          TAG_NAME: ${{ steps.date.outputs.date }}.${{ github.run_id }}
+    - name: Upload binaries to release
+      uses: ncipollo/release-action@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: ${{ env.RELESE_FOLDER }}\binaries${{ env.TAG_NAME }}.zip
+        tag: ${{ env.TAG_NAME }}
+        name: ${{ env.RELEASE_NAME }}
+        body: " "
+      env:
+          TAG_NAME: ${{ steps.date.outputs.date }}.${{ github.run_id }}
+          RELEASE_NAME: ${{ steps.date.outputs.date }}
