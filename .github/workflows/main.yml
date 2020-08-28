@@ -25,7 +25,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: nugfet
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+       dotnet-version: 3.1.301 
+    - name: nuget
       run: dotnet nuget restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
