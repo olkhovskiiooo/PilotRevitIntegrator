@@ -37,11 +37,11 @@
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixUtilExtension">
-      <HintPath>..\packages\WiX.3.11.1\tools\WixUtilExtension.dll</HintPath>
+      <HintPath>packages\WiX.3.11.1\tools\WixUtilExtension.dll</HintPath>
       <Name>WixUtilExtension</Name>
     </WixExtension>
     <WixExtension Include="WixUIExtension">
-      <HintPath>..\packages\WiX.3.11.1\tools\WixUIExtension.dll</HintPath>
+      <HintPath>packages\WiX.3.11.1\tools\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
   </ItemGroup>
