@@ -35,48 +35,9 @@ jobs:
            nuget restore ${{ env.INSTALLER_SOLUTION }}
     - name: Build
       run: dotnet build --configuration Release --no-restore
-    - name: Build Installer
-      run: |
-           cd ${{ env.INSTALLER_FOLDER }}
-           dotnet build --configuration Release --no-restore
-    - name: Get current date
-      id: date
-      run: echo "::set-output name=date::$(date +'%y.%m.%d')" 
-    - name: Move plugin
-      run: |
-          mkdir ${{ github.workspace }}\zip
-          move ${{ github.workspace }}\${{ env.REVIT_SHARE_AGREGATOR }}\bin\Release\* ${{ github.workspace }}\zip
+    - name: Build wix' obj
+      run:  ${{ env.INSTALLER_FOLDER }}\packages\WiX.3.11.1\tools\candle.exe -dSolutionDir=${{ env.INSTALLER_FOLDER }} -dSolutionExt=.sln -dSolutionFileName=Installer.sln -dSolutionName=Installer -dSolutionPath=${{ env.INSTALLER_FOLDER }}\Installer.sln -dConfiguration=Release -dOutDir=${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\obj\x64\Release\ -dPlatform=x64 -dProjectDir=${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\ -dProjectExt=.wixproj -dProjectFileName=Pilot-RvtShareListener_x64.wixproj -dProjectName=Pilot-RvtShareListener_x64 -dProjectPath=${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\Pilot-RvtShareListener_x64.wixproj -dTargetDir=${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\bin\x64\Release\ -dTargetExt=.msi -dTargetFileName=Pilot_RvtShareListener_x64.msi -dTargetName=Pilot_RvtShareListener_x64 -dTargetPath=${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\bin\x64\Release\Pilot_RvtShareListener_x64.msi -out ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\obj\x64\Release\ -arch x64 -ext ..\packages\WiX.3.11.1\tools\WixUtilExtension.dll -ext ..\packages\WiX.3.11.1\tools\WixUIExtension.dll "${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\Components.wxs" "${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\Product.wxs">${{ github.workspace }}\output.txt
       shell: cmd
-    - name: Zip plugin
-      uses: papeloto/action-zip@v1
-      with:
-        files: zip/
-        dest: ${{ env.REVIT_SHARE_AGREGATOR }}.zip
-    - name: Prepare files to release
-      run: |
-       mkdir ${{ env.RELESE_FOLDER }}
-       move ${{ github.workspace }}\${{ env.ADMINISTATOR }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.ADMINISTATOR_RELEASE }}
-       move ${{ github.workspace }}\${{ env.REVIT_ADDIN }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_ADDIN }}
-       move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER }} 
-       move ${{ github.workspace }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}\bin\Release ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_LISTENER_CONSOLE }}
-       mkdir ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
-       move ${{ env.REVIT_SHARE_AGREGATOR }}.zip ${{ env.RELESE_FOLDER }}\${{ env.REVIT_SHARE_AGREGATOR }}
-       mkdir ${{ env.RELESE_FOLDER }}\Installer
-       move ${{ env.INSTALLERX64 }} ${{ env.RELESE_FOLDER }}\Installer
-       move ${{ env.INSTALLERX86 }} ${{ env.RELESE_FOLDER }}\Installer
-    - name: Zip binaries
-      run: |
-          cd ${{ env.RELESE_FOLDER }}
-          tar -a -c -f binaries${{ env.TAG_NAME }}.zip *
-      env:
-          TAG_NAME: ${{ steps.date.outputs.date }}.${{ github.run_id }}
-    - name: Upload binaries to release
-      uses: ncipollo/release-action@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: ${{ env.RELESE_FOLDER }}\binaries${{ env.TAG_NAME }}.zip
-        tag: ${{ env.TAG_NAME }}
-        name: ${{ env.RELEASE_NAME }}
-      env:
-          TAG_NAME: ${{ steps.date.outputs.date }}.${{ github.run_id }}
-          RELEASE_NAME: ${{ steps.date.outputs.date }}
+    - name: Building wix's bin
+      run: ${{ env.INSTALLER_FOLDER }}\packages\WiX.3.11.1\tools\light.exe -out ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\bin\x64\Release\WIX.msi -pdbout ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\bin\x64\Release\WIX.wixpdb -cultures:null -ext ${{ env.INSTALLER_FOLDER }}\packages\WiX.3.11.1\tools\WixUIExtension.dll -contentsfile ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\obj\x64\Release\WIX.wixproj.BindContentsFileListnull.txt -outputsfile ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\obj\x64\Release\WIX.wixproj.BindOutputsFileListnull.txt -builtoutputsfile ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\objx64\Release\WIX.wixproj.BindBuiltOutputsFileListnull.txt -wixprojectfile ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\WIX.wixproj ${{ env.INSTALLER_FOLDER }}\Pilot-RvtShareListener_x64\obj\x64\Release\Product.wixobj
+      shell: cmd
